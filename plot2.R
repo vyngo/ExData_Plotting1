@@ -22,15 +22,14 @@ prepareData <- function(){
   data
 }
 
-createPNGPlot <- function(file_name){
-  dev.copy(png,file_name,  height=480, width=480)
+createPNGPlot <- function(data, file_name){
+  png(file=file_name,height=480, width=480)
+  with(data, plot(Date_Time ,Global_active_power, ylab="Global Active Power (kilowatts)", xlab="", type="l"))
   dev.off()
 }
 data <- prepareData()
 
-with(data, plot(Date_Time ,Global_active_power, ylab="Global Active Power (kilowatts)", xlab="", type="l"))
-
-createPNGPlot("plot2.png")
+createPNGPlot(data, "plot2.png")
 
 
 

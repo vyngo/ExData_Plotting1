@@ -22,18 +22,16 @@ prepareData <- function(){
   data
 }
 
-createPNGPlot <- function(file_name){
-  dev.copy(png,file_name,  height=480, width=480)
+createPNGPlot <- function(data, file_name){
+  png(file=file_name,height=480, width=480)
+  with(data, {
+    plot(Date_Time, Sub_metering_1, type="l",
+         ylab="Energy sub metering", xlab="")
+    lines(Date_Time, Sub_metering_2,col='Red')
+    lines(Date_Time, Sub_metering_3,col='Blue')
+  })
+  legend("topright", col=c("black", "red", "blue"), lty = c(1,1,1), c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
   dev.off()
 }
 data <- prepareData()
-with(data, {
-  plot(Date_Time, Sub_metering_1, type="l",
-       ylab="Energy sub metering", xlab="")
-  lines(Date_Time, Sub_metering_2,col='Red')
-  lines(Date_Time, Sub_metering_3,col='Blue')
-})
-
-legend("topright", col=c("black", "red", "blue"), lty = c(1,1,1), c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
-
-createPNGPlot("plot3.png")
+createPNGPlot(data, "plot3.png")

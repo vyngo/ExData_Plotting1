@@ -19,15 +19,13 @@ prepareData <- function(){
   data
 }
 
-createPNGPlot <- function(file_name){
-  dev.copy(png,file_name,  height=480, width=480)
+createPNGPlot <- function(data, file_name){
+  png(file=file_name,height=480, width=480)
+  hist(data$Global_active_power, main="Global Active Power", xlab="Global Active Power (kilowatts)", col="red")
   dev.off()
 }
 data <- prepareData()
-
-hist(data$Global_active_power, main="Global Active Power", xlab="Global Active Power (kilowatts)", col="red")
-
-createPNGPlot("plot1.png")
+createPNGPlot(data, "plot1.png")
 
 
 

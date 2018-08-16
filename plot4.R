@@ -22,22 +22,23 @@ prepareData <- function(){
   data
 }
 
-createPNGPlot <- function(file_name){
-  dev.copy(png,file_name,  height=480, width=480)
+createPNGPlot <- function(data, file_name){
+  png(file=file_name,height=480, width=480)
+  
+  par(mfrow=c(2,2), mar=c(4,4,2,1), oma=c(0,0,2,0))
+  with(data, {
+    plot(Date_Time ,Global_active_power, ylab="Global Active Power", xlab="", type="l")
+    plot(Date_Time, Voltage, type="l", ylab="Voltage", xlab="datetime")
+    plot(Date_Time, Sub_metering_1, type="l",
+         ylab="Energy sub metering", xlab="")
+    lines(Date_Time, Sub_metering_2,col='Red')
+    lines(Date_Time, Sub_metering_3,col='Blue')
+    legend("topright", col=c("black", "red", "blue"), lty = c(1,1,1), c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),  bty = "n")
+    plot(Date_Time, Global_reactive_power, type="l", ylab="Global_rective_power",xlab="datetime")
+  })
+  
   dev.off()
 }
 data <- prepareData()
 
-par(mfrow=c(2,2), mar=c(4,4,2,1), oma=c(0,0,2,0))
-with(data, {
-  plot(Date_Time ,Global_active_power, ylab="Global Active Power", xlab="", type="l")
-  plot(Date_Time, Voltage, type="l", ylab="Voltage", xlab="datetime")
-  plot(Date_Time, Sub_metering_1, type="l",
-       ylab="Energy sub metering", xlab="")
-  lines(Date_Time, Sub_metering_2,col='Red')
-  lines(Date_Time, Sub_metering_3,col='Blue')
-  legend("topright", col=c("black", "red", "blue"), lty = c(1,1,1), c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),  bty = "n")
-  plot(Date_Time, Global_reactive_power, type="l", ylab="Global_rective_power",xlab="datetime")
-})
-
-createPNGPlot("plot4.png")
+createPNGPlot(data, "plot4.png")
